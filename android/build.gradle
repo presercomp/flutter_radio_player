@@ -1,4 +1,4 @@
-group 'com.cheebeez.radio_player'
+group 'com.presercomp.flutter_radio_player'
 version '1.0-SNAPSHOT'
 
 buildscript {

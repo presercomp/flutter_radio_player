@@ -1,12 +1,12 @@
 /*
- *  RadioPlayerService.kt
+ *  FlutterRadioPlayerService.kt
  *
  *  Created by Ilya Chirkunov <xc@yar.net> on 30.12.2020.
  */
 
-package com.cheebeez.radio_player
+package com.presercomp.flutter_radio_player
 
-import com.cheebeez.radio_player.R
+import com.presercomp.flutter_radio_player.R
 import java.net.URL
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -31,7 +31,7 @@ import android.app.Notification
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 
 /** Service for plays streaming audio content using ExoPlayer. */
-class RadioPlayerService : Service(), Player.EventListener, MetadataOutput {
+class FlutterRadioPlayerService : Service(), Player.EventListener, MetadataOutput {
 
     companion object {
         const val NOTIFICATION_CHANNEL_ID = "radio_channel_id"
@@ -57,8 +57,8 @@ class RadioPlayerService : Service(), Player.EventListener, MetadataOutput {
     }
 
     inner class LocalBinder : Binder() {
-        // Return this instance of RadioPlayerService so clients can call public methods.
-        fun getService(): RadioPlayerService = this@RadioPlayerService
+        // Return this instance of FlutterRadioPlayerService so clients can call public methods.
+        fun getService(): FlutterRadioPlayerService = this@FlutterRadioPlayerService
     }
 
     override fun onBind(intent: Intent?): IBinder? {

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.cheebeez.radio_player">
+  package="com.presercomp.flutter_radio_player">
 
     <!--  Permissions for the plugin  -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -7,7 +7,7 @@
 
     <!--  Services for the plugin  -->
     <application android:usesCleartextTraffic="true">
-        <service android:name=".RadioPlayerService"/>
+        <service android:name=".FlutterRadioPlayerService"/>
     </application>
 
 </manifest>

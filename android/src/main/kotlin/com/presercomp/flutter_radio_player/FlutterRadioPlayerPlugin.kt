@@ -1,10 +1,10 @@
 /*
- *  RadioPlayerPlugin.kt
+ *  FlutterRadioPlayerPlugin.kt
  *
  *  Created by Ilya Chirkunov <xc@yar.net> on 28.12.2020.
  */
 
-package com.cheebeez.radio_player
+package com.presercomp.flutter_radio_player
 
 import androidx.annotation.NonNull
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -33,8 +33,8 @@ import android.graphics.BitmapFactory
 import android.os.IBinder
 import com.google.android.exoplayer2.util.Util
 
-/** RadioPlayerPlugin */
-class RadioPlayerPlugin : FlutterPlugin, MethodCallHandler {
+/** FlutterRadioPlayerPlugin */
+class FlutterRadioPlayerPlugin : FlutterPlugin, MethodCallHandler {
     private lateinit var context: Context
     private lateinit var channel: MethodChannel
     private lateinit var stateChannel: EventChannel
