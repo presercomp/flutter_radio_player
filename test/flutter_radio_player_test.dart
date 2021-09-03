@@ -1,9 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-//import 'package:radio_player/radio_player.dart';
 
 void main() {
-  const MethodChannel channel = MethodChannel('radio_player');
+  const MethodChannel channel = MethodChannel('flutter_radio_player');
 
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -17,7 +16,5 @@ void main() {
     channel.setMockMethodCallHandler(null);
   });
 
-  test('getPlatformVersion', () async {
-    //expect(await RadioPlayer.platformVersion, '42');
-  });
+  test('getPlatformVersion', () async {});
 }
