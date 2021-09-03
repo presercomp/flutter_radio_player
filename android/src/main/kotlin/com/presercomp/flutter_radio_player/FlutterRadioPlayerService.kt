@@ -104,10 +104,6 @@ class FlutterRadioPlayerService : Service(), Player.EventListener, MetadataOutpu
         playerNotificationManager?.invalidate()
     }
 
-    fun isDefined(){
-        return player != null;
-    }
-
     fun play() {
         player.playWhenReady = true
     }
