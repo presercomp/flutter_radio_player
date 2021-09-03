@@ -43,11 +43,11 @@ class FlutterRadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     }
 
     func isDefined(){
-        return player != nil;
+        return player!.rate == 1.0;
     }
 
     func play() {
-        player.play()        
+        player!.play()        
     }
 
     func pause() {
