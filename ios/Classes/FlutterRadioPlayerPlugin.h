@@ -1,4 +1,4 @@
 #import <Flutter/Flutter.h>
 
-@interface RadioPlayerPlugin : NSObject<FlutterPlugin>
+@interface FlutterRadioPlayerPlugin : NSObject<FlutterPlugin>
 @end

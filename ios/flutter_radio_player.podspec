@@ -1,17 +1,17 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint radio_player.podspec' to validate before publishing.
+# Run `pod lib lint flutter_radio_player.podspec' to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'radio_player'
+  s.name             = 'flutter_radio_player'
   s.version          = '0.0.1'
-  s.summary          = 'A new flutter plugin project.'
+  s.summary          = 'A Flutter plugin for streaming radio player'
   s.description      = <<-DESC
-A new flutter plugin project.
+A Flutter plugin for streaming radio player
                        DESC
-  s.homepage         = 'http://example.com'
+  s.homepage         = 'http://presercomp.com'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.author           = { 'PRESERCOMP' => 'desarrollo@presercomp.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'

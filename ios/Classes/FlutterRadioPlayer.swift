@@ -1,5 +1,5 @@
 /*
- *  RadioPlayer.swift
+ *  FlutterRadioPlayer.swift
  *
  *  Created by Ilya Chirkunov <xc@yar.net> on 10.01.2021.
  */
@@ -7,7 +7,7 @@
 import MediaPlayer
 import AVKit
 
-class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
+class FlutterRadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     private var player: AVPlayer!
     private var playerItem: AVPlayerItem!
     private var metadata: Array<String>!
