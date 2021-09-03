@@ -42,10 +42,12 @@ class FlutterRadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         MPNowPlayingInfoCenter.default().nowPlayingInfo?.updateValue(artwork, forKey: MPMediaItemPropertyArtwork)
     }
 
+    func isDefined(){
+        return player != nil;
+    }
+
     func play() {
-        if let player = AVPlayer {
-            player.play()
-        }        
+        player.play()        
     }
 
     func pause() {
