@@ -16,23 +16,23 @@ class FlutterRadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
 
     func setMediaItem(_ streamTitle: String, _ streamUrl: String) {
         MPNowPlayingInfoCenter.default().nowPlayingInfo = [MPMediaItemPropertyTitle: streamTitle, ]
-        defaultArtwork = nil
-        metadataArtwork = nil
-        playerItem = AVPlayerItem(url: URL(string: streamUrl)!)
+        self.defaultArtwork = nil
+        self.metadataArtwork = nil
+        self.playerItem = AVPlayerItem(url: URL(string: streamUrl)!)
 
-        if (player == nil) {
+        if (self.player == nil) {
             // Create an AVPlayer.
-            player = AVPlayer(playerItem: playerItem)
-            player.addObserver(self, forKeyPath: #keyPath(AVPlayer.timeControlStatus), options: [.new], context: nil)
+            self.player = AVPlayer(playerItem: playerItem)
+            self.player.addObserver(self, forKeyPath: #keyPath(AVPlayer.timeControlStatus), options: [.new], context: nil)
             runInBackground()
         } else {
-            player.replaceCurrentItem(with: playerItem)
+            self.player.replaceCurrentItem(with: playerItem)
         }
 
         // Set metadata handler.
         let metaOutput = AVPlayerItemMetadataOutput(identifiers: nil)
         metaOutput.setDelegate(self, queue: DispatchQueue.main)
-        playerItem.add(metaOutput)
+        self.playerItem.add(metaOutput)
     }
 
     func setArtwork(_ image: UIImage?) {
@@ -43,11 +43,11 @@ class FlutterRadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     }
 
     func play() {
-        player!.play()        
+        self.player?.play()
     }
 
     func pause() {
-        player.pause()
+        self.player.pause()
     }
 
     func runInBackground() {
