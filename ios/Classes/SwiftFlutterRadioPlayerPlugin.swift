@@ -9,7 +9,7 @@ import UIKit
 
 public class SwiftRadioPlayerPlugin: NSObject, FlutterPlugin {
     static let instance = SwiftRadioPlayerPlugin()
-    private let player = RadioPlayer()
+    private let player = FlutterRadioPlayer()
 
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "flutter_radio_player", binaryMessenger: registrar.messenger())
