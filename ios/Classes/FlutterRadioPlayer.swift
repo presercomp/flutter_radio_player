@@ -126,7 +126,7 @@ class FlutterRadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         }
         task.resume()
 
-        semaphore.wait(timeout: .distantFuture)
+        _ = semaphore.wait(timeout: .distantFuture)
         return result
     }
 }
