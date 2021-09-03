@@ -28,6 +28,7 @@ class FlutterRadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         } else {
             player.replaceCurrentItem(with: playerItem)
         }
+        print(player);
 
         // Set metadata handler.
         let metaOutput = AVPlayerItemMetadataOutput(identifiers: nil)
