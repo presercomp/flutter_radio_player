@@ -1,5 +1,5 @@
 /*
- *  SwiftRadioPlayerPlugin.swift
+ *  SwiftFlutterRadioPlayerPlugin.swift
  *
  *  Created by Ilya Chirkunov <xc@yar.net> on 10.01.2021.
  */
@@ -7,8 +7,8 @@
 import Flutter
 import UIKit
 
-public class SwiftRadioPlayerPlugin: NSObject, FlutterPlugin {
-    static let instance = SwiftRadioPlayerPlugin()
+public class SwiftFlutterRadioPlayerPlugin: NSObject, FlutterPlugin {
+    static let instance = SwiftFlutterRadioPlayerPlugin()
     private let player = FlutterRadioPlayer()
 
     public static func register(with registrar: FlutterPluginRegistrar) {
