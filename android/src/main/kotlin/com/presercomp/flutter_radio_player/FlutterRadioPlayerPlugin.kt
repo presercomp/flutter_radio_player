@@ -46,16 +46,16 @@ class FlutterRadioPlayerPlugin : FlutterPlugin, MethodCallHandler {
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         context = flutterPluginBinding.applicationContext
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "radio_player")
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "flutter_radio_player")
         channel.setMethodCallHandler(this)
 
-        stateChannel = EventChannel(flutterPluginBinding.binaryMessenger, "radio_player/stateEvents")
+        stateChannel = EventChannel(flutterPluginBinding.binaryMessenger, "flutter_radio_player/stateEvents")
         stateChannel.setStreamHandler(stateStreamHandler)
-        metadataChannel = EventChannel(flutterPluginBinding.binaryMessenger, "radio_player/metadataEvents")
+        metadataChannel = EventChannel(flutterPluginBinding.binaryMessenger, "flutter_radio_player/metadataEvents")
         metadataChannel.setStreamHandler(metadataStreamHandler)
 
         // Channel for default artwork
-        defaultArtworkChannel = BasicMessageChannel(flutterPluginBinding.binaryMessenger, "radio_player/setArtwork", BinaryCodec.INSTANCE)
+        defaultArtworkChannel = BasicMessageChannel(flutterPluginBinding.binaryMessenger, "flutter_radio_player/setArtwork", BinaryCodec.INSTANCE)
         defaultArtworkChannel.setMessageHandler { message, result -> run {
                 val array = message!!.array();
                 val image = BitmapFactory.decodeByteArray(array, 0, array.size);
@@ -65,7 +65,7 @@ class FlutterRadioPlayerPlugin : FlutterPlugin, MethodCallHandler {
         }
 
         // Channel for metadata artwork
-        metadataArtworkChannel = BasicMessageChannel(flutterPluginBinding.binaryMessenger, "radio_player/getArtwork", BinaryCodec.INSTANCE)
+        metadataArtworkChannel = BasicMessageChannel(flutterPluginBinding.binaryMessenger, "flutter_radio_player/getArtwork", BinaryCodec.INSTANCE)
         metadataArtworkChannel.setMessageHandler { message, result -> run {
                 if (service.metadataArtwork == null) {
                     result.reply(null)
