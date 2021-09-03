@@ -10,6 +10,6 @@
 
 @implementation FlutterRadioPlayerPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-  [SwiftFlutterRadioPlayerPlugin registerWithRegistrar:registrar];
+  [FlutterRadioPlayerPlugin registerWithRegistrar:registrar];
 }
 @end
