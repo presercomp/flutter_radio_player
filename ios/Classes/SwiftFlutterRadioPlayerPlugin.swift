@@ -12,16 +12,16 @@ public class SwiftRadioPlayerPlugin: NSObject, FlutterPlugin {
     private let player = RadioPlayer()
 
     public static func register(with registrar: FlutterPluginRegistrar) {
-        let channel = FlutterMethodChannel(name: "radio_player", binaryMessenger: registrar.messenger())
+        let channel = FlutterMethodChannel(name: "flutter_radio_player", binaryMessenger: registrar.messenger())
         registrar.addMethodCallDelegate(instance, channel: channel)
 
-        let stateChannel = FlutterEventChannel(name: "radio_player/stateEvents", binaryMessenger: registrar.messenger())
+        let stateChannel = FlutterEventChannel(name: "flutter_radio_player/stateEvents", binaryMessenger: registrar.messenger())
         stateChannel.setStreamHandler(StateStreamHandler())
-        let metadataChannel = FlutterEventChannel(name: "radio_player/metadataEvents", binaryMessenger: registrar.messenger())
+        let metadataChannel = FlutterEventChannel(name: "flutter_radio_player/metadataEvents", binaryMessenger: registrar.messenger())
         metadataChannel.setStreamHandler(MetadataStreamHandler())
 
         // Channel for default artwork
-        let defaultArtworkChannel = FlutterBasicMessageChannel(name: "radio_player/setArtwork", binaryMessenger: registrar.messenger(), codec: FlutterBinaryCodec())
+        let defaultArtworkChannel = FlutterBasicMessageChannel(name: "flutter_radio_player/setArtwork", binaryMessenger: registrar.messenger(), codec: FlutterBinaryCodec())
         defaultArtworkChannel.setMessageHandler { message, result in
             let image = UIImage(data: message as! Data)
             instance.player.defaultArtwork = image
@@ -30,7 +30,7 @@ public class SwiftRadioPlayerPlugin: NSObject, FlutterPlugin {
         }
 
         // Channel for metadata artwork
-        let metadataArtworkChannel = FlutterBasicMessageChannel(name: "radio_player/getArtwork", binaryMessenger: registrar.messenger(), codec: FlutterBinaryCodec())
+        let metadataArtworkChannel = FlutterBasicMessageChannel(name: "flutter_radio_player/getArtwork", binaryMessenger: registrar.messenger(), codec: FlutterBinaryCodec())
         metadataArtworkChannel.setMessageHandler { message, result in
             let data = instance.player.metadataArtwork?.jpegData(compressionQuality: 1.0)
             result(data)
