@@ -42,7 +42,7 @@ class FlutterRadioPlayerPlugin : FlutterPlugin, MethodCallHandler {
     private lateinit var defaultArtworkChannel: BasicMessageChannel<ByteBuffer>
     private lateinit var metadataArtworkChannel: BasicMessageChannel<ByteBuffer>
     private lateinit var intent: Intent
-    private lateinit var service: RadioPlayerService
+    private lateinit var service: FlutterRadioPlayerService
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         context = flutterPluginBinding.applicationContext
@@ -81,7 +81,7 @@ class FlutterRadioPlayerPlugin : FlutterPlugin, MethodCallHandler {
         }
 
         // Start service
-        intent = Intent(context, RadioPlayerService::class.java)
+        intent = Intent(context, FlutterRadioPlayerService::class.java)
         context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE or Context.BIND_IMPORTANT)
         context.startService(intent)
     }
@@ -119,7 +119,7 @@ class FlutterRadioPlayerPlugin : FlutterPlugin, MethodCallHandler {
     /** Defines callbacks for service binding, passed to bindService() */
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(componentName: ComponentName, iBinder: IBinder) {
-            val binder = iBinder as RadioPlayerService.LocalBinder
+            val binder = iBinder as FlutterRadioPlayerService.LocalBinder
             service = binder.getService()
         }
 
@@ -136,7 +136,7 @@ class FlutterRadioPlayerPlugin : FlutterPlugin, MethodCallHandler {
         override fun onListen(arguments: Any?, events: EventSink?) {
             eventSink = events
             LocalBroadcastManager.getInstance(context).registerReceiver(broadcastReceiver, 
-                    IntentFilter(RadioPlayerService.ACTION_STATE_CHANGED))
+                    IntentFilter(FlutterRadioPlayerService.ACTION_STATE_CHANGED))
         }
 
         override fun onCancel(arguments: Any?) {
@@ -148,7 +148,7 @@ class FlutterRadioPlayerPlugin : FlutterPlugin, MethodCallHandler {
         private var broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 if (intent != null) {
-                    val received = intent.getBooleanExtra(RadioPlayerService.ACTION_STATE_CHANGED_EXTRA, false)
+                    val received = intent.getBooleanExtra(FlutterRadioPlayerService.ACTION_STATE_CHANGED_EXTRA, false)
                     eventSink?.success(received)
                 }
             }
@@ -162,7 +162,7 @@ class FlutterRadioPlayerPlugin : FlutterPlugin, MethodCallHandler {
         override fun onListen(arguments: Any?, events: EventSink?) {
             eventSink = events
             LocalBroadcastManager.getInstance(context).registerReceiver(broadcastReceiver, 
-                    IntentFilter(RadioPlayerService.ACTION_NEW_METADATA))
+                    IntentFilter(FlutterRadioPlayerService.ACTION_NEW_METADATA))
         }
 
         override fun onCancel(arguments: Any?) {
@@ -174,7 +174,7 @@ class FlutterRadioPlayerPlugin : FlutterPlugin, MethodCallHandler {
         private var broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 if (intent != null) {
-                    val received = intent.getStringArrayListExtra(RadioPlayerService.ACTION_NEW_METADATA_EXTRA)
+                    val received = intent.getStringArrayListExtra(FlutterRadioPlayerService.ACTION_NEW_METADATA_EXTRA)
                     eventSink?.success(received)
                 }
             }
