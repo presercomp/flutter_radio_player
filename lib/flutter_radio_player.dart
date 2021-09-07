@@ -45,6 +45,7 @@ class FlutterRadioPlayer {
     });
   }
 
+  // Set atwork from URL
   Future<void> setArtworkFromUrl(String imageUrl) async {
     http.Response response = await http.get(Uri.parse(imageUrl));
     Uint8List rsp = response.bodyBytes;
