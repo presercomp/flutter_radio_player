@@ -39,6 +39,7 @@ class FlutterRadioPlayer {
   /// Set default artwork
   Future<void> setDefaultArtwork(String image) async {
     await rootBundle.load(image).then((value) {
+      print("setDefaultArtwork: " + image);
       _defaultArtworkChannel.send(value);
     });
   }
