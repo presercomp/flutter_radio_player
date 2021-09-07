@@ -5,6 +5,8 @@
  */
 
 import 'dart:async';
+import 'dart:typed_data';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -41,6 +43,14 @@ class FlutterRadioPlayer {
     await rootBundle.load(image).then((value) {
       _defaultArtworkChannel.send(value);
     });
+  }
+
+  Future<void> setArtworkFromUrl(String imageUrl) async {
+    http.Response response = await http.get(Uri.parse(imageUrl));
+    Uint8List rsp = response.bodyBytes;
+    var buffer = rsp.buffer;
+    var value = new ByteData.view(buffer);
+    _defaultArtworkChannel.send(value);
   }
 
   /// Get artwork from metadata
