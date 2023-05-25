@@ -1,11 +1,4 @@
-/*
- *  flutter_radio_player.dart
- *
- *  Created by Ilya Chirkunov <xc@yar.net> on 28.12.2020.
- */
-
 import 'dart:async';
-import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,7 +14,15 @@ class FlutterRadioPlayer {
       BasicMessageChannel("flutter_radio_player/getArtwork", BinaryCodec());
 
   Stream<bool>? _stateStream;
+  StreamSubscription<bool>? _stateStreamSubscription;
   Stream<List<String>>? _metadataStream;
+  StreamSubscription<List<dynamic>>? _metadataStreamSubscription;
+
+  FlutterRadioPlayer() {
+    _stateStreamSubscription = stateStream.listen((bool isPlaying) {});
+    _metadataStreamSubscription =
+        metadataStream.listen((List<dynamic> metadata) {});
+  }
 
   /// Configure channel
   Future<void> setMediaItem(String title, String url, [String? image]) async {
@@ -82,5 +83,11 @@ class FlutterRadioPlayer {
     });
 
     return _metadataStream!;
+  }
+
+  void dispose() {
+    _stateStreamSubscription?.cancel();
+    _metadataStreamSubscription?.cancel();
+    _methodChannel.invokeMethod('dispose');
   }
 }
