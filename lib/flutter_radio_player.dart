@@ -20,8 +20,17 @@ class FlutterRadioPlayer {
 
   FlutterRadioPlayer() {
     _stateStreamSubscription = stateStream.listen((bool isPlaying) {});
+    // _metadataStreamSubscription =
+    //     metadataStream.listen((List<dynamic> metadata) {});
+
     _metadataStreamSubscription =
-        metadataStream.listen((List<dynamic> metadata) {});
+        metadataStream.listen((List<dynamic>? metadata) {
+      if (metadata != null) {
+        final List<String> metadataStrings =
+            metadata.map((value) => value as String).toList();
+        // Procesar los metadatos aquí
+      }
+    });
   }
 
   /// Configure channel
@@ -88,6 +97,6 @@ class FlutterRadioPlayer {
   void dispose() {
     _stateStreamSubscription?.cancel();
     _metadataStreamSubscription?.cancel();
-    _methodChannel.invokeMethod('dispose');
+    _methodChannel.setMethodCallHandler(null);
   }
 }
