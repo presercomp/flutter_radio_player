@@ -14,24 +14,7 @@ class FlutterRadioPlayer {
       BasicMessageChannel("flutter_radio_player/getArtwork", BinaryCodec());
 
   Stream<bool>? _stateStream;
-  StreamSubscription<bool>? _stateStreamSubscription;
   Stream<List<String>>? _metadataStream;
-  StreamSubscription<List<dynamic>>? _metadataStreamSubscription;
-
-  FlutterRadioPlayer() {
-    _stateStreamSubscription = stateStream.listen((bool isPlaying) {});
-    // _metadataStreamSubscription =
-    //     metadataStream.listen((List<dynamic> metadata) {});
-
-    _metadataStreamSubscription =
-        metadataStream.listen((List<dynamic>? metadata) {
-      if (metadata != null) {
-        final List<String> metadataStrings =
-            metadata.map((value) => value as String).toList();
-        // Procesar los metadatos aquí
-      }
-    });
-  }
 
   /// Configure channel
   Future<void> setMediaItem(String title, String url, [String? image]) async {
@@ -94,9 +77,5 @@ class FlutterRadioPlayer {
     return _metadataStream!;
   }
 
-  void dispose() {
-    _stateStreamSubscription?.cancel();
-    _metadataStreamSubscription?.cancel();
-    _methodChannel.setMethodCallHandler(null);
-  }
+  void dispose() {}
 }
