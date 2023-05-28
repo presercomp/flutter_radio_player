@@ -21,6 +21,19 @@ rootProject.allprojects {
     }
 }
 
+repositories {
+    google()
+    mavenCentral()
+
+    String storageUrl = "https://storage.googleapis.com"
+    maven {
+        url '../../flutter_nps/build/host/outputs/repo'
+    }
+    maven {
+        url "$storageUrl/download.flutter.io"
+    }
+}
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
