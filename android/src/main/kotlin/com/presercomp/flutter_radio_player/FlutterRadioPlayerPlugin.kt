@@ -2,6 +2,7 @@
  *  FlutterRadioPlayerPlugin.kt
  *
  *  Created by Ilya Chirkunov <xc@yar.net> on 28.12.2020.
+ *  Modify by Sebastián Solar <sebastian.solar@presercomp.cl> on 2023.05.27
  */
 
 package com.presercomp.flutter_radio_player
@@ -175,7 +176,7 @@ class FlutterRadioPlayerPlugin : FlutterPlugin, MethodCallHandler {
             override fun onReceive(context: Context?, intent: Intent?) {
                 if (intent != null) {
                     val received = intent.getStringArrayListExtra(FlutterRadioPlayerService.ACTION_NEW_METADATA_EXTRA)
-                    eventSink?.success(received)
+                    eventSink?.success(received?.toList() ?: emptyList<String>())
                 }
             }
         }
