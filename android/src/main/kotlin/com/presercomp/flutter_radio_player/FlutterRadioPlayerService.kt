@@ -2,6 +2,7 @@
  *  FlutterRadioPlayerService.kt
  *
  *  Created by Ilya Chirkunov <xc@yar.net> on 30.12.2020.
+ *  Modify by Sebastián Solar <sebastian.solar@presercomp.cl> on 2023.05.27
  */
 
 package com.presercomp.flutter_radio_player

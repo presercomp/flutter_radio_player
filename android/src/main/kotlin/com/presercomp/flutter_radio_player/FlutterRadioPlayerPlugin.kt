@@ -101,7 +101,12 @@ class FlutterRadioPlayerPlugin : FlutterPlugin, MethodCallHandler {
         when (call.method) {
             "set" -> {
                 val args = call.arguments<ArrayList<String>>()
-                service.setMediaItem(args[0], args[1])
+                if(args != null && args.size >= 2){
+                    service.setMediaItem(args[0], args[1])
+                } else {
+                    result.error("InvalidArguments", "Invalid arguments for 'set' method", null)
+                    return
+                }
             }
             "play" -> {
                 service.play()
