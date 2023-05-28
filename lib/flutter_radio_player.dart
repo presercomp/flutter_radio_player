@@ -15,6 +15,8 @@ class FlutterRadioPlayer {
 
   Stream<bool>? _stateStream;
   Stream<List<String>>? _metadataStream;
+  bool _isInitialized = false;
+  bool _isPlaying = false;
 
   /// Configure channel
   Future<void> setMediaItem(String title, String url, [String? image]) async {
@@ -25,10 +27,12 @@ class FlutterRadioPlayer {
 
   Future<void> play() async {
     await _methodChannel.invokeMethod('play');
+    _isPlaying = true;
   }
 
   Future<void> pause() async {
     await _methodChannel.invokeMethod('pause');
+    _isPlaying = false;
   }
 
   /// Set default artwork
@@ -71,11 +75,21 @@ class FlutterRadioPlayer {
   Stream<List<String>> get metadataStream {
     _metadataStream ??=
         _metadataEvents.receiveBroadcastStream().map((metadata) {
-      return metadata.map<String>((value) => value as String).toList();
+      return metadata?.map<String>((value) => value as String).toList() ?? [];
     });
 
     return _metadataStream!;
   }
 
   void dispose() {}
+
+  /// Método para verificar si está inicializado
+  bool isInitialized() {
+    return _isInitialized;
+  }
+
+  /// Método para verificar si está en reproducción
+  bool isPlaying() {
+    return _isPlaying;
+  }
 }
