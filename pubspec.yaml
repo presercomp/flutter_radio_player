@@ -1,6 +1,6 @@
 name: flutter_radio_player
 description: A Flutter plugin to play streaming audio content with background support and lock screen controls.
-version: 0.2.1
+version: 0.2.2
 homepage: https://github.com/presercomp/flutter_radio_player
 
 environment:
