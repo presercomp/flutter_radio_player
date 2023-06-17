@@ -1,3 +1,10 @@
+/*
+ *  flutter_radio_player.dart
+ *
+ *  Created by Ilya Chirkunov <xc@yar.net> on 28.12.2020.
+ * Edited by Sebastián Solar on 17.06.2023
+ */
+
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -8,6 +15,7 @@ class FlutterRadioPlayer {
   static const _metadataEvents =
       EventChannel('flutter_radio_player/metadataEvents');
   static const _stateEvents = EventChannel('flutter_radio_player/stateEvents');
+
   static const _defaultArtworkChannel =
       BasicMessageChannel("flutter_radio_player/setArtwork", BinaryCodec());
   static const _metadataArtworkChannel =
@@ -18,11 +26,13 @@ class FlutterRadioPlayer {
   bool _isInitialized = false;
   bool _isPlaying = false;
 
-  /// Configure channel
-  Future<void> setMediaItem(String title, String url, [String? image]) async {
+  /// Set new streaming URL.
+  Future<void> setChannel(
+      {required String title, required String url, String? imagePath}) async {
     await Future.delayed(Duration(milliseconds: 500));
     await _methodChannel.invokeMethod('set', [title, url]);
-    if (image != null) setDefaultArtwork(image);
+
+    if (imagePath != null) setDefaultArtwork(imagePath);
   }
 
   Future<void> play() async {
@@ -30,16 +40,23 @@ class FlutterRadioPlayer {
     _isPlaying = true;
   }
 
+  Future<void> stop() async {
+    await _methodChannel.invokeMethod('stop');
+    _isPlaying = false;
+  }
+
   Future<void> pause() async {
     await _methodChannel.invokeMethod('pause');
     _isPlaying = false;
   }
 
-  /// Set default artwork
+  /// Set the default image in the notification panel
   Future<void> setDefaultArtwork(String image) async {
-    await rootBundle.load(image).then((value) {
-      _defaultArtworkChannel.send(value);
-    });
+    final byteData = image.startsWith('http')
+        ? await NetworkAssetBundle(Uri.parse(image)).load(image)
+        : await rootBundle.load(image);
+
+    _defaultArtworkChannel.send(byteData);
   }
 
   // Set atwork from URL
@@ -51,16 +68,31 @@ class FlutterRadioPlayer {
     _defaultArtworkChannel.send(value);
   }
 
-  /// Get artwork from metadata
-  Future<Image?> getMetadataArtwork() async {
-    final byteData = await _metadataArtworkChannel.send(ByteData(0));
-    if (byteData == null) return null;
+  /// Helps avoid conflicts with custom metadata.
+  Future<void> ignoreIcyMetadata() async {
+    await _methodChannel.invokeMethod('ignore_icy');
+  }
 
-    return Image.memory(
-      byteData.buffer.asUint8List(),
-      key: UniqueKey(),
-      fit: BoxFit.cover,
-    );
+  /// Parse album covers from iTunes.
+  Future<void> itunesArtworkParser(bool enable) async {
+    await _methodChannel.invokeMethod('itunes_artwork_parser', enable);
+  }
+
+  /// Set custom metadata.
+  Future<void> setCustomMetadata(List<String> metadata) async {
+    await _methodChannel.invokeMethod('metadata', metadata);
+  }
+
+  /// Returns the album cover if it has already been downloaded.
+  Future<Image?> getArtworkImage() async {
+    final byteData = await _metadataArtworkChannel.send(ByteData(0));
+    Image? image;
+
+    if (byteData != null)
+      image = Image.memory(byteData.buffer.asUint8List(),
+          key: UniqueKey(), fit: BoxFit.cover);
+
+    return image;
   }
 
   /// Get the playback state stream.
@@ -75,13 +107,11 @@ class FlutterRadioPlayer {
   Stream<List<String>> get metadataStream {
     _metadataStream ??=
         _metadataEvents.receiveBroadcastStream().map((metadata) {
-      return metadata?.map<String>((value) => value as String).toList() ?? [];
+      return metadata.map<String>((value) => value as String).toList();
     });
 
     return _metadataStream!;
   }
-
-  void dispose() {}
 
   /// Método para verificar si está inicializado
   bool isInitialized() {
