@@ -40,7 +40,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
 /** Service for plays streaming audio content using ExoPlayer. */
-class RadioPlayerService : Service(), Player.Listener {
+class FlutterRadioPlayerService : Service(), Player.Listener {
 
     companion object {
         const val NOTIFICATION_CHANNEL_ID = "radio_channel_id"
@@ -72,8 +72,8 @@ class RadioPlayerService : Service(), Player.Listener {
     }
 
     inner class LocalBinder : Binder() {
-        // Return this instance of RadioPlayerService so clients can call public methods.
-        fun getService(): RadioPlayerService = this@RadioPlayerService
+        // Return this instance of FlutterRadioPlayerService so clients can call public methods.
+        fun getService(): FlutterRadioPlayerService = this@FlutterRadioPlayerService
     }
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -170,7 +170,7 @@ class RadioPlayerService : Service(), Player.Listener {
         // Setup media session
         val intent = Intent(Intent.ACTION_MEDIA_BUTTON)
         val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-        mediaSession = MediaSessionCompat(context, "RadioPlayerService", null, pendingIntent)
+        mediaSession = MediaSessionCompat(context, "FlutterRadioPlayerService", null, pendingIntent)
 
         mediaSession?.let {
             it.isActive = true

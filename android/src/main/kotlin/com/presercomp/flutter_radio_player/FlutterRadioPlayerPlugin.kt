@@ -34,8 +34,8 @@ import android.graphics.BitmapFactory
 import android.os.IBinder
 import com.google.android.exoplayer2.util.Util
 
-/** RadioPlayerPlugin */
-class RadioPlayerPlugin : FlutterPlugin, MethodCallHandler {
+/** FlutterRadioPlayerPlugin */
+class FlutterRadioPlayerPlugin : FlutterPlugin, MethodCallHandler {
     private lateinit var context: Context
     private lateinit var channel: MethodChannel
     private lateinit var stateChannel: EventChannel
