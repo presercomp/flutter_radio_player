@@ -41,7 +41,7 @@ class FlutterRadioPlayer {
   }
 
   Future<void> stop() async {
-    await _methodChannel.invokeMethod('stop');
+    await _methodChannel.invokeMethod('pause');
     _isPlaying = false;
   }
 
