@@ -2,7 +2,7 @@
  *  flutter_radio_player.dart
  *
  *  Created by Ilya Chirkunov <xc@yar.net> on 28.12.2020.
- * Edited by Sebastián Solar on 17.06.2023
+ *  Edited by Sebastián Solar on 17.06.2023
  */
 
 import 'dart:async';
