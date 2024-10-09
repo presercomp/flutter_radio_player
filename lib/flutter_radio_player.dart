@@ -27,12 +27,23 @@ class FlutterRadioPlayer {
   bool _isPlaying = false;
 
   /// Set new streaming URL.
-  Future<void> setChannel(
-      {required String title, required String url, String? imagePath}) async {
-    await Future.delayed(Duration(milliseconds: 500));
-    await _methodChannel.invokeMethod('set', [title, url]);
+  // Future<void> setChannel(
+  //     {required String title, required String url, String? imagePath}) async {
+  //   await Future.delayed(Duration(milliseconds: 500));
+  //   await _methodChannel.invokeMethod('set', [title, url]);
 
-    if (imagePath != null) setDefaultArtwork(imagePath);
+  //   if (imagePath != null) setDefaultArtwork(imagePath);
+  // }
+
+  Future<void> setChannel(
+    {required String title, required String url, String? imagePath}) async {
+    try {
+      await Future.delayed(Duration(milliseconds: 500));
+      await _methodChannel.invokeMethod('set', [title, url]);
+      if (imagePath != null) setDefaultArtwork(imagePath);
+    } catch (e) {
+      debugPrint("Error setting channel: $e");
+    }
   }
 
   Future<void> play() async {
@@ -51,13 +62,23 @@ class FlutterRadioPlayer {
   }
 
   /// Set the default image in the notification panel
+  // Future<void> setDefaultArtwork(String image) async {
+  //   final byteData = image.startsWith('http')
+  //       ? await NetworkAssetBundle(Uri.parse(image)).load(image)
+  //       : await rootBundle.load(image);
+
+  //   _defaultArtworkChannel.send(byteData);
+  // }
   Future<void> setDefaultArtwork(String image) async {
+  try {
     final byteData = image.startsWith('http')
         ? await NetworkAssetBundle(Uri.parse(image)).load(image)
         : await rootBundle.load(image);
-
     _defaultArtworkChannel.send(byteData);
+  } catch (e) {
+    debugPrint("Error setting default artwork: $e");
   }
+}
 
   // Set atwork from URL
   Future<void> setArtworkFromUrl(String imageUrl) async {
